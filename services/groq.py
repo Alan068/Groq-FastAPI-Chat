@@ -14,7 +14,7 @@ async def get_ai_response(query: str) -> str:
     async with httpx.AsyncClient() as client:
         try:
             response = await client.post(GROQ_API_URL, json=payload, headers=headers)
-            response.raise_for_status()  # Raise exception for HTTP errors
+            response.raise_for_status()
             return response.json().get("choices", [{}])[0].get("message", {}).get("content", "No response")
         except httpx.HTTPStatusError as e:
             return f"API Error: {e.response.status_code}"
